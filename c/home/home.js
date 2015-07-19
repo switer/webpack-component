@@ -1,6 +1,5 @@
 'use strict';
 
-require('./home.css')
 require('/c/header')
 
 module.exports = new Reve({

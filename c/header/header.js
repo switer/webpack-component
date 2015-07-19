@@ -1,7 +1,5 @@
 'use strict';
 
-require('./header.css')
-
 var tpl = require('./header.tpl')
 
 module.exports = Reve.component('header', {

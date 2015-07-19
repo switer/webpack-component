@@ -6,10 +6,11 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var clean = require('gulp-clean')
 var rev = require('gulp-rev')
+var ComponentPlugin = require('./plugins/component')
 
 gulp.task('default', ['before', 'webpack'], function() {
 
-    return gulp.src(['./lib/*.js', './dist/*.js'])
+    return gulp.src(['./lib/*.js', './dist/bundle.js'])
         .pipe(concat('bundle.js'))
         .pipe(rev())
         .pipe(gulp.dest('./dist'))
@@ -29,9 +30,13 @@ gulp.task('webpack', function(cb) {
     return gulpWebPack({
         entry: './index.js',
         output: {
-            filename: 'bundle-[hash].js'
+            filename: 'bundle.js'
         },
         module: {
+            preLoaders: [{
+                test: /\/c\/[^\/]+\/[^\/]+\.js/,
+                loader: 'component'
+            }],
             loaders:[{
                 test: /.*?\.tpl$/,
                 loader: 'html-loader'
@@ -44,7 +49,8 @@ gulp.task('webpack', function(cb) {
             modulesDirectories: ['loaders', 'node_modules']
         },
         plugins: [
-            new webpack.NormalModuleReplacementPlugin(/\/c\/[\w\-\$]+$/, function(f) {
+            new ComponentPlugin(),
+            new webpack.NormalModuleReplacementPlugin(/^\/c\/[^\/]+$/, function(f) {
                 var cname = f.request.match(/\/c\/([\w\-\$]+)$/)[1]
                 f.request = cname + '/' + cname
                 return f
