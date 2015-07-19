@@ -3,6 +3,7 @@ var gulpWebPack = require('gulp-webpack')
 var uglify = require('gulp-uglifyjs')
 var concat = require('gulp-concat')
 var webpack = require('webpack')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 gulp.task('default', ['webpack'], function() {
 
@@ -26,7 +27,10 @@ gulp.task('webpack', function(cb) {
             loaders: [{
                 test: /.*?\.tpl$/,
                 loader: 'html-loader'
-            }]
+            },{
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract("css-loader")
+            },]
         },
         plugins: [
             new webpack.NormalModuleReplacementPlugin(/\/c\/[\w\-\$]+$/, function(f) {
@@ -34,7 +38,8 @@ gulp.task('webpack', function(cb) {
                 f.request = cname + '/' + cname
                 return f
             }),
-            new webpack.BannerPlugin('Version 1.0.0')
+            new webpack.BannerPlugin('Version 1.0.0'),
+            new ExtractTextPlugin("bundle.css")
         ],
         resolve: {
             modulesDirectories: ['c']
