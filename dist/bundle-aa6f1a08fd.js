@@ -901,6 +901,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	__webpack_require__(2)
+	__webpack_require__(4)
 
 	module.exports = new Reve({
 		el: '.home',
@@ -911,13 +912,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 3 */,
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(3)
+	__webpack_require__(5)
 
-	var tpl = __webpack_require__(5)
+	var tpl = __webpack_require__(6)
 
 	module.exports = Reve.component('header', {
 		template: tpl,
@@ -929,14 +937,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})
 
 /***/ },
-/* 3 */
+/* 5 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 4 */,
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"header\">\n\t<div class=\"title\" r-html=\"{title}\"></div>\n</div>";

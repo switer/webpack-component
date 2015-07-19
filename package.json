@@ -16,5 +16,9 @@
     "html-loader": "^0.3.0",
     "node-libs-browser": "^0.5.2",
     "webpack": "^1.10.1"
+  },
+  "devDependencies": {
+    "gulp-clean": "^0.3.1",
+    "gulp-rev": "^5.1.0"
   }
 }
