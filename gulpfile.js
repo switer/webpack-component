@@ -8,9 +8,9 @@ var clean = require('gulp-clean')
 var rev = require('gulp-rev')
 var ComponentPlugin = require('./plugins/component')
 
-gulp.task('default', ['before', 'webpack'], function() {
+gulp.task('default', ['before', 'components'], function() {
 
-    return gulp.src(['./lib/*.js', './dist/bundle.js'])
+    return gulp.src(['./lib/*.js', './dist/components.js'])
         .pipe(concat('bundle.js'))
         .pipe(rev())
         .pipe(gulp.dest('./dist'))
@@ -26,11 +26,11 @@ gulp.task('before', function () {
     return gulp.src('./dist', {read: false})
                 .pipe(clean())
 })
-gulp.task('webpack', function(cb) {
+gulp.task('components', function(cb) {
     return gulpWebPack({
         entry: './index.js',
         output: {
-            filename: 'bundle.js'
+            filename: 'components.js'
         },
         module: {
             preLoaders: [{
