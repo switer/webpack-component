@@ -5,20 +5,28 @@ var concat = require('gulp-concat')
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var clean = require('gulp-clean')
-var rev = require('gulp-rev')
+var hash = require('gulp-hash')
 var ComponentPlugin = require('./plugins/component')
+
+var HASH_LENGTH = 6
 
 gulp.task('default', ['before', 'components'], function() {
 
     return gulp.src(['./lib/*.js', './dist/components.js'])
         .pipe(concat('bundle.js'))
-        .pipe(rev())
+        .pipe(hash({
+            hashLength: HASH_LENGTH,
+            template: '<%= name %>_<%= hash %><%= ext %>'
+        }))
         .pipe(gulp.dest('./dist'))
         .pipe(uglify('bundle.min.js', {
             mangle: true,
             compress: true
         }))
-        .pipe(rev())
+        .pipe(hash({
+            hashLength: HASH_LENGTH,
+            template: '<%= name %>_<%= hash %><%= ext %>'
+        }))
         .pipe(gulp.dest('./dist'))
 })
 
@@ -56,7 +64,7 @@ gulp.task('components', function(cb) {
                 return f
             }),
             new webpack.BannerPlugin('Version 1.0.0'),
-            new ExtractTextPlugin("bundle-[hash].css")
+            new ExtractTextPlugin('bundle_[hash:' + HASH_LENGTH +  '].css')
         ],
         resolve: {
             modulesDirectories: ['c']
