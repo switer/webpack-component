@@ -48,10 +48,13 @@ gulp.task('components', function(cb) {
             loaders:[{
                 test: /.*?\.tpl$/,
                 loader: 'html-loader'
-            },{
+            }, {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract("css-loader")
-            },]
+            }, {
+                test: /\.(png|jpg|gif|jpeg|webp)$/,
+                loader: "file-loader?name=[path][name]_[hash:" + HASH_LENGTH + "].[ext]"
+            }]
         },
         resolveLoader: {
             modulesDirectories: ['loaders', 'node_modules']
