@@ -3,18 +3,13 @@
 var gulp = require('gulp')
 var webpack = require('webpack')
 var gulpWebPack = require('gulp-webpack')
-var gulpFilter = require('gulp-filter')
-var cssmin = require('gulp-cssmin')
-var rename = require('gulp-rename')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var ComponentPlugin = require('../plugins/component')
 
 
 module.exports = function componentsBuild(options) {
 	var HASH_LENGTH = options.hashLength
-	var distDir = options.dist
 	var entry = options.entry || './index'
-	var jsFilter = gulpFilter(['**/*', '!*.js'])
 
     return gulpWebPack({
             entry: entry,
@@ -54,12 +49,4 @@ module.exports = function componentsBuild(options) {
                 modulesDirectories: ['c']
             }
         })
-        .pipe(jsFilter)
-        .pipe(gulp.dest(distDir))
-        .pipe(gulpFilter(['*.css']))
-        .pipe(cssmin())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(distDir))
-        .pipe(jsFilter.restore())
-        .pipe(gulpFilter(['*.js', '!*.css']))
 }
